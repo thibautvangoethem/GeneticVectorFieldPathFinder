@@ -25,6 +25,7 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 
 	public void draw() {
 		this.drawEnd();
+		this.drawObstructions();
 		for(Entity i:this.getEntities()) {
 			this.drawEntity(i);
 		}
@@ -47,8 +48,17 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 	}
 	
 	private void drawObstructions() {
+		double XIncrement=scene.getWidth()/50;
+		double YIncrement=scene.getHeight()/50;
 		
+		for(Rectangle2D r:this.getObstructions()) {
+			Rectangle obstruction=new Rectangle(r.getMinX()*XIncrement,scene.getHeight()-r.getMaxY()*YIncrement,r.getWidth()*XIncrement,r.getHeight()*YIncrement);
+			obstruction.setFill(Color.RED);
+			
+			root.getChildren().add(obstruction);
+		}
 	}
+	
 	
 	private void drawVectorField(Entity e) {
 		VectorField Field=e.getField();

@@ -33,6 +33,7 @@ public class GeneticAlgorithm {
 	
 	public GeneticAlgorithm(int amountOfVectors,int population,double mutationRate,double maxtime) {
 		this.Entities=new ArrayList<>();
+		this.Obstructions=new ArrayList<>();
 		this.Population=population;
 		this.AmountOfVectors=amountOfVectors;
 		this.MutationRate=mutationRate;
@@ -53,6 +54,7 @@ public class GeneticAlgorithm {
 		this.CurrentTime+=time;
 		this.calculateScores();
 		this.checkEnd();
+		this.checkObstructions();
 		if(this.CurrentTime>this.MaxTime) {
 			this.advanceGeneration();
 			this.CurrentTime=0;
@@ -101,6 +103,10 @@ public class GeneticAlgorithm {
 	public Entity getHighestScore() {
 		return HighestScore;
 	}
+	
+	public void addObstruction(double x1,double y1,double x2,double y2) {
+		this.Obstructions.add(new Rectangle2D(x1,y1,x2-x1,y2-y1));
+	};
 	
 	private ArrayList<Entity> createNewPopulation() {
 		
@@ -159,10 +165,28 @@ public class GeneticAlgorithm {
 			double x=e.getPosition().getX();
 			double y=e.getPosition().getY();
 			if (x > x1 && x < x2 && y > y1 && y < y2) {
-				e.stop();
+				e.win();
 			}
 		}
 	}
+	
+	private void checkObstructions() {
+		for(Rectangle2D r:this.Obstructions) {
+			double x1=r.getMinX();
+			double y1=r.getMinY();
+			double x2=r.getMaxX();
+			double y2=r.getMaxY();
+			for(Entity e:this.Entities) {
+				double x=e.getPosition().getX();
+				double y=e.getPosition().getY();
+				if (x > x1 && x < x2 && y > y1 && y < y2) {
+					e.stop();
+				}
+			}
+		}
+		
+	}
+	
 	private void calculateScores() {
 		Point2D midpoint=new Point2D(this.End.getMinX()+this.End.getWidth()/2,this.End.getMinY()+this.End.getHeight()/2);
 		for(Entity e:this.Entities) {

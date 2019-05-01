@@ -124,9 +124,12 @@ public class Entity {
 		return Finished;
 	}
 	
-	public void stop() {
+	public void win() {
 		this.Finished=true;
 		this.GotToEnd=true;
+	}
+	public void stop() {
+		this.Finished=true;
 	}
 	
 	
