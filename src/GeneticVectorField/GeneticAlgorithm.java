@@ -29,8 +29,7 @@ public class GeneticAlgorithm {
 	private double MaxTime;
 	
 	private double CurrentTime;
-	
-	
+		
 	public GeneticAlgorithm(int amountOfVectors,int population,double mutationRate,double maxtime) {
 		this.Entities=new ArrayList<>();
 		this.Obstructions=new ArrayList<>();
@@ -68,6 +67,7 @@ public class GeneticAlgorithm {
 		}
 		this.Generation=0;
 		this.CurrentTime=0;
+		this.Obstructions=new ArrayList<>();
 	}
 	
 	public void advanceGeneration() {
@@ -137,7 +137,7 @@ public class GeneticAlgorithm {
 			rand-=e.getScore();
 			if(rand<=0) {
 				return e;
-				}
+			}
 		}
 		 return new Entity(0,this.AmountOfVectors/2);
 		 
@@ -170,6 +170,8 @@ public class GeneticAlgorithm {
 			double y=e.getPosition().getY();
 			if (x > x1 && x < x2 && y > y1 && y < y2) {
 				e.win();
+				this.advanceGeneration();
+				this.CurrentTime=0;
 			}
 		}
 	}
@@ -183,12 +185,12 @@ public class GeneticAlgorithm {
 			for(Entity e:this.Entities) {
 				double x=e.getPosition().getX();
 				double y=e.getPosition().getY();
-				if (x > x1 && x < x2 && y > y1 && y < y2) {
+				if (x > x1 && x < x2 && y > y1 && y < y2 && !e.isFinished()) {
 					e.stop();
 				}
 			}
 		}
-		
+
 	}
 	
 	private void calculateScores() {

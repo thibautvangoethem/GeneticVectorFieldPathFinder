@@ -14,7 +14,6 @@ import javafx.stage.Stage;;
 
 
 public class Main extends Application {
-	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -26,8 +25,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root,1000,1000);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			 
-			JavaFXGeneticAlgorithm algo=new JavaFXGeneticAlgorithm(50,100,0.05,100,scene,drawBoard);
-			algo.addObstruction(23, 15, 27, 45);
+			JavaFXGeneticAlgorithm algo=new JavaFXGeneticAlgorithm(50,100,0.05,50,scene,drawBoard);
 			algo.update(0.1);
 			algo.draw();
 			
