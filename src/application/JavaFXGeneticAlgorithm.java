@@ -3,10 +3,13 @@ import GeneticVectorField.Entity;
 import GeneticVectorField.GeneticAlgorithm;
 import GeneticVectorField.VectorField;
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 
 public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 	
@@ -21,13 +24,30 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 	}
 
 	public void draw() {
+		this.drawEnd();
 		for(Entity i:this.getEntities()) {
 			this.drawEntity(i);
 		}
-		if(this.getEntities().size()!=0) {
-			this.drawVectorField(this.getEntities().get(0));
+		if(this.getHighestScore()!=null) {
+			this.drawVectorField(this.getHighestScore());
 		}
 			
+	}
+	
+	private void drawEnd() {
+		double XIncrement=scene.getWidth()/50;
+		double YIncrement=scene.getHeight()/50;
+		Rectangle2D end=this.getEnd();
+		
+		Rectangle graphicend=new Rectangle(end.getMinX()*XIncrement,scene.getHeight()-end.getMaxY()*YIncrement,end.getWidth()*XIncrement,end.getHeight()*YIncrement);
+		graphicend.setFill(Color.GREEN);
+		
+		root.getChildren().add(graphicend);
+		
+	}
+	
+	private void drawObstructions() {
+		
 	}
 	
 	private void drawVectorField(Entity e) {

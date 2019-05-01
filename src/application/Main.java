@@ -25,7 +25,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root,1000,1000);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			 
-			JavaFXGeneticAlgorithm algo=new JavaFXGeneticAlgorithm(50,100,0,10,scene,root); 
+			JavaFXGeneticAlgorithm algo=new JavaFXGeneticAlgorithm(50,100,0.05,20,scene,root); 
 			algo.update(0.1);
 			algo.draw();
 			
