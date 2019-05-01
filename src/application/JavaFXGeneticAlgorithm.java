@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 	
@@ -32,7 +34,11 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 		if(this.getHighestScore()!=null) {
 			this.drawVectorField(this.getHighestScore());
 		}
-			
+		
+		Text gen = new Text (scene.getWidth()*.70, 20, "Generation:"+this.getGeneration());
+		gen.setFont(Font.font ("Verdana", 20));
+		this.root.getChildren().add(gen);
+		
 	}
 	
 	private void drawEnd() {

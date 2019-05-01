@@ -62,13 +62,17 @@ public class GeneticAlgorithm {
 	}
 	
 	public void reset() {
-		for(Entity i:this.Entities) {
-			i.reset();
+		this.Entities=new ArrayList<>();
+		for(int i =0;i<this.Population;i++) {
+			this.Entities.add(new Entity(0,(int)(this.AmountOfVectors/2)));
 		}
+		this.Generation=0;
+		this.CurrentTime=0;
 	}
 	
 	public void advanceGeneration() {
 		this.Entities=this.createNewPopulation();
+		this.HighestScore=null;
 		Generation++;
 	}
 
