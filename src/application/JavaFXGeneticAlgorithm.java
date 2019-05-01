@@ -18,11 +18,17 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 	Scene scene;
 	
 	Group root;
+	
+	Point2D ClickPoint1;
+	
+	Point2D ClickPoint2;
 
 	public JavaFXGeneticAlgorithm(int amountOfVectors, int population, double mutationRate,double time,Scene scene,Group group) {
 		super(amountOfVectors, population, mutationRate,time);
 		this.scene=scene;
 		this.root=group;
+		this.ClickPoint1=null;
+		this.ClickPoint2=null;
 	}
 
 	public void draw() {
@@ -38,6 +44,39 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 		Text gen = new Text (scene.getWidth()*.70, 20, "Generation:"+this.getGeneration());
 		gen.setFont(Font.font ("Verdana", 20));
 		this.root.getChildren().add(gen);
+		
+	}
+	
+	public void click(double i,double j) {
+		if(this.ClickPoint1==null) {
+			this.ClickPoint1=new Point2D(i,j);
+		}else if(this.ClickPoint2==null) {
+			this.ClickPoint2=new Point2D(i,j);
+		}
+		if(this.ClickPoint1!=null && this.ClickPoint2!=null) {
+			this.addObstruction();
+		}
+	}
+	
+	private void addObstruction() {
+		double XIncrement=scene.getWidth()/50;
+		double YIncrement=scene.getHeight()/50;
+		
+		double x1=this.ClickPoint1.getX()>this.ClickPoint2.getX() ? this.ClickPoint1.getX():this.ClickPoint2.getX();
+		double y1=this.ClickPoint1.getY()<this.ClickPoint2.getY() ? this.ClickPoint1.getY():this.ClickPoint2.getY();
+		double x2=this.ClickPoint1.getX()<this.ClickPoint2.getX() ? this.ClickPoint1.getX():this.ClickPoint2.getX();
+		double y2=this.ClickPoint1.getY()>this.ClickPoint2.getY() ? this.ClickPoint1.getY():this.ClickPoint2.getY();
+		
+		x1=x1/XIncrement;
+		x2=x2/XIncrement;
+		
+		y1=(scene.getHeight()-y1)/YIncrement;
+		y2=(scene.getHeight()-y2)/YIncrement;
+		
+		this.addObstruction(x2, y2, x1, y1);
+		
+		this.ClickPoint1=null;
+		this.ClickPoint2=null;
 		
 	}
 	
