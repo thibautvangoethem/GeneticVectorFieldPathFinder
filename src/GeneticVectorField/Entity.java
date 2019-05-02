@@ -90,10 +90,11 @@ public class Entity {
 	public void calculateScore(Point2D end) {
 		double distance = Math.sqrt((end.getY() - this.Position.getY()) * (end.getY() - this.Position.getY()) + (end.getX() - this.Position.getX()) * (end.getX() - this.Position.getX()));
 		if(!this.GotToEnd) {
-			this.Score=Math.pow(1/distance,2);
+			this.Score=1/Math.pow(distance+1,2);
 		}else {
-			this.Score=Math.pow(1/distance,3);
+			this.Score=1/(distance+1);
 		}
+		
 	}
 
 	public Point2D getPosition() {

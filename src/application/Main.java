@@ -17,15 +17,13 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Entity e=new Entity(25,25);
-			e.updatePosition(1);
 			Pane root = new Pane();
 			Group drawBoard = new Group();
 			root.getChildren().add(drawBoard);
 			Scene scene = new Scene(root,1000,1000);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			 
-			JavaFXGeneticAlgorithm algo=new JavaFXGeneticAlgorithm(50,100,0.05,50,scene,drawBoard);
+			JavaFXGeneticAlgorithm algo=new JavaFXGeneticAlgorithm(50,100,0.01,50,scene,drawBoard);
 			algo.update(0.1);
 			algo.draw();
 			

@@ -42,7 +42,7 @@ public class GeneticAlgorithm {
 		this.HighestScore=null;
 		this.End=new Rectangle2D(amountOfVectors-3, amountOfVectors/2-2, 3, 4);
 		for(int i =0;i<population;i++) {
-			this.Entities.add(new Entity(0,(int)(amountOfVectors/2)));
+			this.Entities.add(new Entity(1,(int)(amountOfVectors/2)));
 		}
 	}
 	
@@ -128,10 +128,7 @@ public class GeneticAlgorithm {
 	}
 	
 	private Entity getWeightedParent(double totalScore) {
-		double mutate =ThreadLocalRandom.current().nextDouble(0, 1);
-		if(mutate<this.MutationRate) {
-			return new Entity(0,this.AmountOfVectors/2);
-		}
+		
 		 double rand=ThreadLocalRandom.current().nextDouble(0, totalScore);
 		 for(Entity e:this.Entities) {
 			rand-=e.getScore();
@@ -157,7 +154,18 @@ public class GeneticAlgorithm {
 				}
 			}
 		}
-		return new Entity(0,this.AmountOfVectors/2,childField);
+		//here is the calculation of the mutation algorithm, this will just randomize the amount of vectors that need to be metated and will then mutate random positions
+		double mutate =ThreadLocalRandom.current().nextDouble(0, this.MutationRate);
+		mutate=mutate*this.AmountOfVectors*this.AmountOfVectors;
+		while(mutate>0) {
+			int i=ThreadLocalRandom.current().nextInt(0, this.AmountOfVectors-1);
+			int j=ThreadLocalRandom.current().nextInt(0, this.AmountOfVectors-1);
+			double vecx=ThreadLocalRandom.current().nextDouble(-1, 1);
+			double vecy=ThreadLocalRandom.current().nextDouble(-1, 1);
+			childField.setVector(i, j, new Vector2D(vecx,vecy).normalize());
+			mutate--;
+		}
+		return new Entity(1,this.AmountOfVectors/2,childField);
 	}
 	
 	private void checkEnd() {
@@ -170,8 +178,6 @@ public class GeneticAlgorithm {
 			double y=e.getPosition().getY();
 			if (x > x1 && x < x2 && y > y1 && y < y2) {
 				e.win();
-				this.advanceGeneration();
-				this.CurrentTime=0;
 			}
 		}
 	}
