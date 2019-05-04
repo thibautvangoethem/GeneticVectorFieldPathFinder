@@ -1,6 +1,12 @@
+/**
+ * this file contains the main class/application
+ * @author Thibaut Van Goethem
+ */
+
 package application;
 
 import GeneticVectorField.Entity;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -13,6 +19,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;;
 
 
+/**
+ * main class 
+ * @author Thibaut Van Goethem
+ *
+ */
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
@@ -23,11 +34,12 @@ public class Main extends Application {
 			Scene scene = new Scene(root,1000,1000);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			 
+			//creating the genetic algorithm and drawing it for the first time
 			JavaFXGeneticAlgorithm algo=new JavaFXGeneticAlgorithm(50,100,0.01,50,scene,drawBoard);
-			algo.update(0.1);
 			algo.draw();
 			
-			Button button = new Button("Accept");
+			//creating the reset button at the top left
+			Button button = new Button("reset");
 			button.setText("reset");
 			button.setWrapText(true);
 			button.setOnAction(new EventHandler<ActionEvent>() {
@@ -36,6 +48,7 @@ public class Main extends Application {
 			    }
 			});
 			
+			//creating the click event to make obstructions
 			root.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				 @Override
 				    public void handle(MouseEvent event) {
@@ -54,8 +67,6 @@ public class Main extends Application {
 	            	drawBoard.getChildren().clear();
 	            	algo.update(0.10);
 	            	algo.draw();
-	            	    
-	            	
 	            }
 	        }.start();
 		} catch(Exception e) {

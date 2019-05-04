@@ -2,16 +2,16 @@
  * @author Thibaut Van Goethem
  * this file contains the implementation of a vectorfield, this is just an arraylist of and arraylist of vector2ds with some additional functioanlity
  */
+
 package GeneticVectorField;
+
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 /**
  * the field is represented with (0,0) being at the lower left and i being the x-axis/ j being the y-axis
- * 
  */
 public class VectorField {
 	ArrayList<ArrayList<Vector2D> > Field;
@@ -23,6 +23,10 @@ public class VectorField {
 		this.Field=new ArrayList<>();
 	}
 	
+	/**
+	 * creates an instance of a vectorfield with the entire array of vectors given
+	 * @param field
+	 */
 	public VectorField(ArrayList<ArrayList<Vector2D> > field) {
 		this.Field=field;
 	}
@@ -34,7 +38,6 @@ public class VectorField {
 	 */
 	public VectorField(int i, int j) {
 		this.Field=new ArrayList<>();
-		Random r = new Random();
 		for(int xsize=0;xsize<i;xsize++) {
 			ArrayList<Vector2D> row =new ArrayList<>();
 			for(int ysize=0;ysize<j;ysize++) {
@@ -48,9 +51,9 @@ public class VectorField {
 	
 	/**
 	 * create a vectorfield with given size of a given vectors
-	 * @param i
-	 * @param j
-	 * @param v
+	 * @param i x size of the field
+	 * @param j y size of the field
+	 * @param v the vector that will be placed in all the cells
 	 */
 	public VectorField(int i, int j,Vector2D v) {
 		this.Field=new ArrayList<>();
@@ -63,14 +66,34 @@ public class VectorField {
 		}
 	}
 	
+	/**
+	 * setter for a single vector in the field
+	 * @param i the x coordinate
+	 * @param j the y coordinate
+	 * @param v the vector
+	 */
 	public void setVector(int i,int j,Vector2D v) {
 		Field.get(i).set(j, v);
 	}
 	
+	/**
+	 * getter for a singel vector of the field
+	 * @param i the x coordinate
+	 * @param j the y coordinate
+	 * @return a vector on said coordinate
+	 */
 	public Vector2D getSingleVector(int i,int j) {
 		return Field.get(i).get(j);
 	}
 	
+	/**
+	 * this function will take two doubles within the bound of the vectorfield and will then interpolate a new vector for said doubles
+	 * this interpolation is done by calculating the length from the doubles to all the surrounding whole points (ints) as this is where the vectors are located
+	 * then it will do 1/length * vector for each of the surrounding vectors to interpolate it
+	 * @param i the x coordinate
+	 * @param j the y coordinate
+	 * @return a new interpolated vector
+	 */
 	public Vector2D getInterpolatedVector(double i,double j) {
 		//getting all the surrounding vectors out of the Field and also calculating the distance of the vurrent point to the point where the vector is projected
 		Vector2D upperLeft=Field.get((int)Math.floor(i)).get((int)Math.ceil(j));
@@ -99,6 +122,14 @@ public class VectorField {
 		
 	}
 	
+	/**
+	 * a simple private function to calculate the distance between two points
+	 * @param x1 x coordinate of first point
+	 * @param y1 y coordinate of first point
+	 * @param x2 x coordinate of second point
+	 * @param y2 y coordinate of second point
+	 * @return a double denoting the length between the points
+	 */
 	static private double calculateDistanceBetweenPoints(double x1,double y1,double x2,double y2) {
 		return Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
 	}

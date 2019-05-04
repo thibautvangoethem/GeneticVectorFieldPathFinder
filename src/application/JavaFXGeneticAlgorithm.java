@@ -1,4 +1,12 @@
+/**
+ * this file contains the class JavaFXGeneticAlogithm which is the javafx graphics implementation of the geneteic alogrithm
+ * this inherits from the GeneticAlgorithm class
+ * @see{@link GeneticVectorField.GeneticALgorithm}
+ * @author thibaut Van Goethem
+ */
+
 package application;
+
 import GeneticVectorField.Entity;
 import GeneticVectorField.GeneticAlgorithm;
 import GeneticVectorField.VectorField;
@@ -23,6 +31,15 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 	
 	Point2D ClickPoint2;
 
+	/**
+	 * creates an instance of this class
+	 * @param amountOfVectors the vectorgield size
+	 * @param population the population for a single generation
+	 * @param mutationRate the mutationRate for creating new children
+	 * @param time the time each generation gets
+	 * @param scene the javafx scene (only used to get screenSize) @todo change this so it isnt needed
+	 * @param group the JavaFX Group that is used to draw in
+	 */
 	public JavaFXGeneticAlgorithm(int amountOfVectors, int population, double mutationRate,double time,Scene scene,Group group) {
 		super(amountOfVectors, population, mutationRate,time);
 		this.scene=scene;
@@ -31,6 +48,9 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 		this.ClickPoint2=null;
 	}
 
+	/**
+	 * draws the entire application on the javaFX Group
+	 */
 	public void draw() {
 		this.drawEnd();
 		this.drawObstructions();
@@ -41,12 +61,18 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 			this.drawVectorField(this.getHighestScore());
 		}
 		
+		//this is the generation text at the top right
 		Text gen = new Text (scene.getWidth()*.70, 20, "Generation:"+this.getGeneration());
 		gen.setFont(Font.font ("Verdana", 20));
 		this.root.getChildren().add(gen);
 		
 	}
 	
+	/**
+	 * performs a click at the screen, after 2 clicks a obstruction is added
+	 * @param i x pos of the click
+	 * @param j y pos of the click
+	 */
 	public void click(double i,double j) {
 		if(this.ClickPoint1==null) {
 			this.ClickPoint1=new Point2D(i,j);
@@ -58,15 +84,22 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 		}
 	}
 	
+	/**
+	 * adds a rectangular obstruction, this happens after 2 clicks
+	 */
 	private void addObstruction() {
 		double XIncrement=scene.getWidth()/50;
 		double YIncrement=scene.getHeight()/50;
 		
+		//this is so you can click everywhere in any order
+		//it the highest x value in x1 and lowest in y1(this is actually highest value as y starts at top)
+		//and the lowest x and highest gets put into x2 and y2
 		double x1=this.ClickPoint1.getX()>this.ClickPoint2.getX() ? this.ClickPoint1.getX():this.ClickPoint2.getX();
 		double y1=this.ClickPoint1.getY()<this.ClickPoint2.getY() ? this.ClickPoint1.getY():this.ClickPoint2.getY();
 		double x2=this.ClickPoint1.getX()<this.ClickPoint2.getX() ? this.ClickPoint1.getX():this.ClickPoint2.getX();
 		double y2=this.ClickPoint1.getY()>this.ClickPoint2.getY() ? this.ClickPoint1.getY():this.ClickPoint2.getY();
 		
+		//translating the javaFX coordinates to my own coordinate system
 		x1=x1/XIncrement;
 		x2=x2/XIncrement;
 		
@@ -80,6 +113,9 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 		
 	}
 	
+	/**
+	 * this function draws the end square in green
+	 */
 	private void drawEnd() {
 		double XIncrement=scene.getWidth()/50;
 		double YIncrement=scene.getHeight()/50;
@@ -92,6 +128,9 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 		
 	}
 	
+	/**
+	 * this function draws the obstruction in red 
+	 */
 	private void drawObstructions() {
 		double XIncrement=scene.getWidth()/50;
 		double YIncrement=scene.getHeight()/50;
@@ -104,7 +143,11 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 		}
 	}
 	
-	
+	/**
+	 * this function draws the entire vectorfield of an entity
+	 * each vector will start at it position and will have a size of half the distance between 2 vectors
+	 * @param e the entity that it will draw the field for
+	 */
 	private void drawVectorField(Entity e) {
 		VectorField Field=e.getField();
 
@@ -124,6 +167,10 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 
 	}
 	
+	/**
+	 * draws an entity as a triangle/arrow
+	 * @param e the entity
+	 */
 	private void drawEntity(Entity e) {
 		Point2D p=e.getPosition();
 		
@@ -148,7 +195,7 @@ public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
         double dx = (sx - ex) * factor;
         double dy = (sy - ey) * factor;
 
-        // part ortogonal to main line
+        // part orthogonal to main line
         double ox = (sx - ex) * factorO;
         double oy = (sy - ey) * factorO;
         
