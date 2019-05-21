@@ -2,7 +2,7 @@
  * this file only contains the Entity class
  * @author thibaut Van Goethem
  */
-package GeneticVectorField;
+package geneticVectorField;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 

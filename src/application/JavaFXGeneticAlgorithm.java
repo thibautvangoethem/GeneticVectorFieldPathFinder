@@ -7,9 +7,9 @@
 
 package application;
 
-import GeneticVectorField.Entity;
-import GeneticVectorField.GeneticAlgorithm;
-import GeneticVectorField.VectorField;
+import geneticVectorField.Entity;
+import geneticVectorField.GeneticAlgorithm;
+import geneticVectorField.VectorField;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;

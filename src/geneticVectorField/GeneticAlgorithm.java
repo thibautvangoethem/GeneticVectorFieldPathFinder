@@ -2,7 +2,7 @@
  * this file contains the class for the entire genetic algorithm
  * @author Thibaut Van Goethem
  */
-package GeneticVectorField;
+package geneticVectorField;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;

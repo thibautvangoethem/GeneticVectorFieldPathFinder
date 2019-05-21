@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+    <pupolationSize>100</pupolationSize>
+    <vectorFieldSize>50</vectorFieldSize>
+    <maxTime>50.0</maxTime>
+    <mutationRate>0.01</mutationRate>
+    <tickRate>0.1</tickRate>
+    <screenWidth>1000</screenWidth>
+    <screenHeight>1000</screenHeight>
+</settings>

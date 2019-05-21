@@ -3,7 +3,7 @@
  * this file contains the implementation of a vectorfield, this is just an arraylist of and arraylist of vector2ds with some additional functioanlity
  */
 
-package GeneticVectorField;
+package geneticVectorField;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
