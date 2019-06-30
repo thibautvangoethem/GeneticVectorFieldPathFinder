@@ -1,10 +1,15 @@
 package application;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.xml.bind.annotation.*;
 import java.math.BigDecimal;
 
+
 @XmlRootElement(name = "settings")
 public class Settings {
+	private final Logger logger = LoggerFactory.getLogger(Settings.class);
 	
 	@XmlElement(name = "pupolationSize")
 	private int populationSize;
@@ -38,8 +43,15 @@ public class Settings {
 		this.tickRate = tickRate;
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
+		logger.info("made new settings object with following members:");
+		logger.info("populationsize: {}",this.populationSize);
+		logger.info("vectorFieldSize: {}",this.vectorFieldSize);
+		logger.info("maxTime: {}",this.maxTime);
+		logger.info("tickrate: {}",this.tickRate);
+		logger.info("screeWidth: {}",this.screenWidth);
+		logger.info("screeheight: {}",this.screenHeight);
 	}
-
+	
 	public int getPopulationSize() {
 		return populationSize;
 	}

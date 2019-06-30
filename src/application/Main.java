@@ -5,6 +5,9 @@
 
 package application;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -25,10 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;;
-
-
-
+import javafx.stage.Stage;
 
 /**
  * main class 
@@ -36,10 +36,13 @@ import javafx.stage.Stage;;
  *
  */
 public class Main extends Application {
+	final Logger logger = LoggerFactory.getLogger(Main.class);
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+		    logger.info("starting up program");
 			Settings set=readSettings();
+			logger.info("settings read");
 			Pane root = new Pane();
 			Group drawBoard = new Group();
 			root.getChildren().add(drawBoard);
@@ -48,6 +51,7 @@ public class Main extends Application {
 			 
 			//creating the genetic algorithm and drawing it for the first time
 			JavaFXGeneticAlgorithm algo=new JavaFXGeneticAlgorithm(set.getVectorFieldSize(),set.getPopulationSize(),set.getMutationRate(),set.getMaxTime(),scene,drawBoard);
+			logger.info("Genetic algorithm set up");
 			algo.draw();
 			
 			//creating the reset button at the top left
@@ -57,6 +61,7 @@ public class Main extends Application {
 			button.setOnAction(new EventHandler<ActionEvent>() {
 			    @Override public void handle(ActionEvent e) {
 			    	algo.reset();
+			    	logger.info("reset done");
 			    }
 			});
 			
@@ -65,6 +70,7 @@ public class Main extends Application {
 				 @Override
 				    public void handle(MouseEvent event) {
 				        algo.click(event.getSceneX(), event.getSceneY());
+				        logger.info("click registered on {} {} ",event.getSceneX(),event.getSceneY());
 				    }
 			});
 			root.getChildren().add(button);
@@ -78,7 +84,9 @@ public class Main extends Application {
 	            public void handle(long now) {
 	            	drawBoard.getChildren().clear();
 	            	algo.update(set.getTickRate());
+	            	logger.debug("ticked algorithm");
 	            	algo.draw();
+	            	logger.debug("drew new frame");
 	            }
 	        }.start();
 		} catch(Exception e) {
@@ -86,7 +94,7 @@ public class Main extends Application {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void Main(String[] args) {
 		launch(args);
 	}
 	
@@ -96,6 +104,7 @@ public class Main extends Application {
 	 */
 	public Settings readSettings() {
 		try {
+			
 			File f = new File("./settings.xml");
 			if(f.exists() && !f.isDirectory()) { 
 				JAXBContext jaxbContext = JAXBContext.newInstance(Settings.class);

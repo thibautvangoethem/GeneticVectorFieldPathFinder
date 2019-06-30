@@ -23,13 +23,13 @@ import javafx.scene.text.Text;
 
 public class JavaFXGeneticAlgorithm extends GeneticAlgorithm{
 	
-	Scene scene;
+	private Scene scene;
 	
-	Group root;
+	private Group root;
 	
-	Point2D ClickPoint1;
+	private Point2D ClickPoint1;
 	
-	Point2D ClickPoint2;
+	private Point2D ClickPoint2;
 
 	/**
 	 * creates an instance of this class

@@ -28,9 +28,9 @@ public class Entity {
 	
 	private double Score;
 	
-	boolean Finished; 
+	private boolean Finished; 
 	
-	boolean GotToEnd;
+	private boolean GotToEnd;
 	
 	/**
 	 * creates an Entity instance with all vectors set to random
@@ -87,7 +87,7 @@ public class Entity {
 	/**
 	 * updates the acceleration of this entity by looking into the vectorfield and interpolating the surrounding vectors
 	 */
-	public void updateAcceleration() {
+	private void updateAcceleration() {
 		try {
 			Acceleration=this.Field.getInterpolatedVector(this.Position.getX(), this.Position.getY());
 		}catch(Exception e) {

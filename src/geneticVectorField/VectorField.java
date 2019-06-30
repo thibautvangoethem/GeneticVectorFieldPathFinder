@@ -14,7 +14,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
  * the field is represented with (0,0) being at the lower left and i being the x-axis/ j being the y-axis
  */
 public class VectorField {
-	ArrayList<ArrayList<Vector2D> > Field;
+	private ArrayList<ArrayList<Vector2D> > Field;
 	
 	/**
 	 * creates an instance of the vectorfield object with the field empty
@@ -23,14 +23,7 @@ public class VectorField {
 		this.Field=new ArrayList<>();
 	}
 	
-	/**
-	 * creates an instance of a vectorfield with the entire array of vectors given
-	 * @param field
-	 */
-	public VectorField(ArrayList<ArrayList<Vector2D> > field) {
-		this.Field=field;
-	}
-	
+
 	/**
 	 * create a vectorfield with the vectors set to random size
 	 * @param i the x size

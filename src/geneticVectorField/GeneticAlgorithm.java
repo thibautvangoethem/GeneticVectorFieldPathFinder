@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
@@ -18,6 +20,7 @@ import javafx.geometry.Rectangle2D;
  *
  */
 public class GeneticAlgorithm {
+	private final Logger logger = LoggerFactory.getLogger(GeneticAlgorithm.class);
 	
 	private ArrayList<Entity> Entities;
 	
@@ -106,15 +109,17 @@ public class GeneticAlgorithm {
 		this.Generation=0;
 		this.CurrentTime=0;
 		this.Obstructions=new ArrayList<>();
+		logger.debug("reset done in algortihm");
 	}
 	
 	/**
 	 * advances the algorithm 1 generation thus the population will be remade based on the scores of the previous population
 	 */
-	public void advanceGeneration() {
+	private void advanceGeneration() {
 		this.Entities=this.createNewPopulation();
 		this.HighestScore=null;
 		Generation++;
+		logger.info("advanced to generation {}",this.Generation);
 	}
 
 	/**
@@ -190,6 +195,8 @@ public class GeneticAlgorithm {
 	 */
 	public void addObstruction(double x1,double y1,double x2,double y2) {
 		this.Obstructions.add(new Rectangle2D(x1,y1,x2-x1,y2-y1));
+		logger.info("obstruction added");
+		logger.debug("points of obstruction: 1){}, {} 2){}, {}",x1,y1,x2-x1,y2-y1);
 	};
 	
 	/**
@@ -209,8 +216,8 @@ public class GeneticAlgorithm {
 			Entity newEntity=getNewEntityFromParents(this.getWeightedParent(totalScore),this.getWeightedParent(totalScore));
 			newEntities.add(newEntity);
 		}
+//		logger.info("new population created");
 		return newEntities;
-		
 	}
 	
 	/**
@@ -267,6 +274,7 @@ public class GeneticAlgorithm {
 			childField.setVector(i, j, new Vector2D(vecx,vecy).normalize());
 			mutate--;
 		}
+		logger.debug("created new entity");
 		return new Entity(1,this.AmountOfVectors/2,childField);
 	}
 	
@@ -283,6 +291,7 @@ public class GeneticAlgorithm {
 			double y=e.getPosition().getY();
 			if (x > x1 && x < x2 && y > y1 && y < y2) {
 				e.win();
+				logger.debug("entity made it to the end");
 			}
 		}
 	}
