@@ -3,7 +3,7 @@ This project contains a genetic path finder algorithm where a certain entity tri
 
 The project is written in java 8 and the graphical implementation is done with JavaFX.
 
-![picture of project]("ReadmePicture.PNG")
+![picture of project](ReadmePicture.PNG)
 
 The only non default dependency is Apache commons math3-3.6.1.
 	
